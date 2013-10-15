@@ -3,9 +3,12 @@
 (require pkg/lib setup/getinfo)
 
 (define (get-deps p #:local [local #t])
-  (cond [local
-         (extract-pkg-dependencies (get-info/full (pkg-directory p)))]
+  (define dir (pkg-directory p))
+  (cond [dir
+         (extract-pkg-dependencies (get-info/full dir))]
+        [local (error 'get-deps "pkg ~a is not installed" p)]
         [else
+         ;(printf ">>> going to the net for ~v\n" p)
          (define-values (a b deps)
            (get-pkg-content (pkg-desc p #f #f #f #f)))
          deps]))
