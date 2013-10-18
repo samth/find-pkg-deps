@@ -31,11 +31,10 @@
            (hash-ref table s)]))
   (find-all ps))
 
-(module+ main
-         (define local #t)
-         (command-line
-          #:once-any
-          ["--local" "local only" (set! local #t)]
-          ["--net" "use remote pkg server" (set! local #f)]
-          #:args ps (pretty-print (sort (go local ps)  string<?))))
+(define local #t)
+(command-line
+ #:once-any
+ ["--local" "local only" (set! local #t)]
+ ["--net" "use remote pkg server" (set! local #f)]
+ #:args ps (pretty-print (sort (go local ps)  string<?)))
   
